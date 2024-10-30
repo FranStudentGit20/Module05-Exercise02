@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Module05_Exercise01.ViewModel"
+             x:Class="Module05_Exercise01.View.ViewEmployee"
+             Title="ViewEmployee">
+    <VerticalStackLayout>
+        <Label Text="Employee Information"
+       FontSize="20"
+       HorizontalOptions="Center"/>
+        <ListView ItemsSource="{Binding EmployeeList}" SelectedItem="{Binding SelectedEmployee}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame HasShadow="False" BackgroundColor="#E1F5FE" Padding="10" Margin="5">
+                            <StackLayout>
+                                <Label Text="{Binding EmployeeID}" TextColor="#01579B" FontAttributes="Bold"/>
+                                <Label Text="{Binding Name}" TextColor="#0288D1"/>
+                                <Label Text="{Binding Address}" TextColor="#0288D1"/>
+                                <Label Text="{Binding email}" TextColor="#0288D1"/>
+                                <Label Text="{Binding ContactNo}" TextColor="#0288D1"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:EmployeeViewModel}},
+        Path=SelectedEmployeeCommand}"
+        CommandParameter="{Binding .}"/>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Load Data" Command="{Binding LoadDataCommand}"/>
+        <Label Text="Add New Person" FontSize="Large"/>
+        <Entry Placeholder="Name" Text="{Binding NewEmployeeName}"/>
+        <Entry Placeholder="Address" Text="{Binding NewEmployeeAddress}"/>
+        <Entry Placeholder="Email" Text="{Binding NewEmployeeEmail}"/>
+        <Entry Placeholder="ContactNo" Text="{Binding NewEmployeeContactNo}"/>
+        <StackLayout>
+            <Button Text="Add Person" Command="{Binding AddEmployeeCommand}"/>
+            <Button Text="Delete Person" Command="{Binding DeleteEmployeeCommand}" IsEnabled="{Binding IsEmployeeSelected}"/>
+        </StackLayout>
+        <Label x:Name="ConnectionStatusLabel"
+       Text="{Binding StatusMessage}"
+       FontSize="18"
+       HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</ContentPage>
